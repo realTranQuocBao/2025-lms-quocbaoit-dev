@@ -1,0 +1,43 @@
+# Sử dụng image PHP với Apache
+FROM php:8.3.20-apache
+
+# Cài đặt các tiện ích cần thiết và các extension của PHP
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    libzip-dev \
+    libxml2-dev \
+    libjpeg-dev \
+    libpng-dev \
+    libfreetype6-dev \
+    libonig-dev \
+    libicu-dev \
+    unzip \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install \
+    pdo \
+    pdo_pgsql \
+    pgsql \
+    zip \
+    soap \
+    gd \
+    intl \
+    exif
+
+RUN a2enmod rewrite
+COPY php.ini /usr/local/etc/php/
+ENV APACHE_DOCUMENT_ROOT /var/www/html
+
+# Tạo thư mục cho Moodle
+WORKDIR /var/www/html
+
+# Copy mã nguồn Moodle vào container
+COPY ../ /var/www/html
+
+# Đặt quyền cho thư mục Moodle
+RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
+
+# Expose cổng 80
+EXPOSE 80
+
+# Khởi động Apache
+CMD ["apache2-foreground"]
