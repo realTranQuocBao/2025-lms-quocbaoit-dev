@@ -23,9 +23,12 @@ RUN apt-get update && apt-get install -y \
     intl \
     exif
 
+# Enable Apache mod_rewrite
 RUN a2enmod rewrite
-COPY php.ini /usr/local/etc/php/
-ENV APACHE_DOCUMENT_ROOT /var/www/html
+
+# COPY php.ini /usr/local/etc/php/
+COPY custom-php.ini /usr/local/etc/php/
+# ENV APACHE_DOCUMENT_ROOT /var/www/html
 
 # Tạo thư mục cho Moodle
 WORKDIR /var/www/html
@@ -36,8 +39,8 @@ COPY ../ /var/www/html
 # Đặt quyền cho thư mục Moodle
 RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
 
-# Expose cổng 80
-EXPOSE 80
+# # Expose cổng 80
+# EXPOSE 80
 
-# Khởi động Apache
-CMD ["apache2-foreground"]
+# # Khởi động Apache
+# CMD ["apache2-foreground"]
