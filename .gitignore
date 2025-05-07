@@ -1,3 +1,4 @@
 pgdata
 moodledata
 .env
+moodle/config.php

@@ -27,7 +27,7 @@ RUN apt-get update && apt-get install -y \
 RUN a2enmod rewrite
 
 # COPY php.ini /usr/local/etc/php/
-COPY _apache/custom-php.ini /usr/local/etc/php/
+COPY _apache/custom-php.ini /usr/local/etc/php/conf.d/
 # ENV APACHE_DOCUMENT_ROOT /var/www/html
 
 # Tạo thư mục cho Moodle

@@ -18,7 +18,6 @@ services:
       MOODLE_DB_USER: moodleuser
       MOODLE_DB_PASSWORD: moodlepassword
     volumes:
-      - ./moodle:/var/www/html
       - ./moodledata:/var/www/moodledata
       # - /d/Work/202504_VAA/2025_Moodle/2025-lms-quocbaoit-dev:/var/www/html # Mount source code vào container
     depends_on:
@@ -32,10 +31,10 @@ services:
       - 5432:5432
     environment:
       # - POSTGRES_DB=moodle
-      # - POSTGRES_USER=moodleuser
       # - POSTGRES_PASSWORD=moodlepassword
+      # - POSTGRES_USER=postgres
       # - POSTGRES_PASSWORD=1234
-      POSTGRES_DB: ${POSTGRES_DB_MOODLE}
+      # POSTGRES_DB: ${POSTGRES_DB_MOODLE}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
