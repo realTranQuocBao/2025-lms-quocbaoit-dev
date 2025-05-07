@@ -27,17 +27,18 @@ RUN apt-get update && apt-get install -y \
 RUN a2enmod rewrite
 
 # COPY php.ini /usr/local/etc/php/
-COPY custom-php.ini /usr/local/etc/php/
+COPY _apache/custom-php.ini /usr/local/etc/php/
 # ENV APACHE_DOCUMENT_ROOT /var/www/html
 
 # Tạo thư mục cho Moodle
 WORKDIR /var/www/html
 
 # Copy mã nguồn Moodle vào container
-COPY ../ /var/www/html
+COPY moodle/ /var/www/html
 
 # Đặt quyền cho thư mục Moodle
-RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
+RUN chown -R www-data:www-data /var/www/html && \
+    chmod -R 755 /var/www/html
 
 # # Expose cổng 80
 # EXPOSE 80
