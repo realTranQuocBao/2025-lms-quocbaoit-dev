@@ -6,10 +6,10 @@ services:
       context: .
       dockerfile: Dockerfile.moodle
     container_name: moodle-apache
-    # ports:
-    #   # - "8080:80" # Expose Moodle on localhost:8080
-    expose:
-      - 80
+    ports:
+      - "80:80" # Expose port `80:` to the outside world
+    # expose:
+    #   - 80
     environment:
       MOODLE_URL: http://127.0.0.1:80
       MOODLE_DB_TYPE: pgsql # mariadb|pgsql|mssql
@@ -34,11 +34,11 @@ services:
       # - POSTGRES_PASSWORD=moodlepassword
       # - POSTGRES_USER=postgres
       # - POSTGRES_PASSWORD=1234
-      # POSTGRES_DB: ${POSTGRES_DB_MOODLE}
+      POSTGRES_DB: ${POSTGRES_DB_MOODLE}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-      - dbdata:/var/lib/postgresql/data
+      - ./dbdata:/var/lib/postgresql/data
 
     # db_mssql:
     #   # image: mcr.microsoft.com/mssql/server:2019-latest
@@ -56,16 +56,16 @@ services:
     #   volumes:
     #     - dbdata:/var/opt/mssql
 
-  nginx:
-    image: nginx:latest
-    container_name: nginx
-    ports:
-      - "80:80" # Expose port 80 to the outside world
-    volumes:
-      - ./_nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
-    depends_on:
-      - moodle
-      # - backend
+  # nginx:
+  #   image: nginx:latest
+  #   container_name: nginx
+  #   ports:
+  #     - "80:80" # Expose port 80 to the outside world
+  #   volumes:
+  #     - ./_nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+  #   depends_on:
+  #     - moodle
+  #     # - backend
 
 volumes:
   moodledata:

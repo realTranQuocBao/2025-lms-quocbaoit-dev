@@ -28,7 +28,7 @@ RUN a2enmod rewrite
 
 # COPY php.ini /usr/local/etc/php/
 COPY _apache/custom-php.ini /usr/local/etc/php/conf.d/
-# ENV APACHE_DOCUMENT_ROOT /var/www/html
+ENV APACHE_DOCUMENT_ROOT /var/www/html
 
 # Tạo thư mục cho Moodle
 WORKDIR /var/www/html
@@ -40,8 +40,5 @@ COPY moodle/ /var/www/html
 RUN chown -R www-data:www-data /var/www/html && \
     chmod -R 755 /var/www/html
 
-# # Expose cổng 80
-# EXPOSE 80
-
-# # Khởi động Apache
-# CMD ["apache2-foreground"]
+# Khởi động Apache
+CMD ["apache2-foreground"]
